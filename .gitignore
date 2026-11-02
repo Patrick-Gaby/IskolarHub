@@ -1,1 +1,20 @@
 /backups/
+
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# IDE settings
+.idea/
+
+# Build outputs
+**/target/
+**/dist/
+
+# Installed frontend dependencies
+**/node_modules/
+
+# Local logs
+*.log
