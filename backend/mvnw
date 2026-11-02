@@ -1,0 +1,29 @@
+#!/bin/sh
+# Minimal Maven wrapper: downloads the Maven version pinned in .mvn/wrapper/maven-wrapper.properties
+# and runs it. Run from the backend/ directory:  ./mvnw test
+set -eu
+BASE_DIR=$(cd "$(dirname "$0")" && pwd)
+PROPS="$BASE_DIR/.mvn/wrapper/maven-wrapper.properties"
+URL=$(sed -n 's/^distributionUrl=//p' "$PROPS" | tr -d '\r')
+[ -n "$URL" ] || { echo "mvnw: distributionUrl missing in $PROPS" >&2; exit 1; }
+NAME=$(basename "$URL" -bin.zip)
+ROOT="${MAVEN_USER_HOME:-$HOME/.m2}/wrapper/dists"
+MVN_HOME="$ROOT/$NAME"
+if [ ! -x "$MVN_HOME/bin/mvn" ]; then
+  command -v unzip >/dev/null 2>&1 || { echo "mvnw: 'unzip' is required" >&2; exit 1; }
+  mkdir -p "$ROOT"
+  TMP=$(mktemp -d)
+  echo "mvnw: downloading $URL" >&2
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL -o "$TMP/maven.zip" "$URL"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -q -O "$TMP/maven.zip" "$URL"
+  else
+    echo "mvnw: 'curl' or 'wget' is required" >&2; rm -rf "$TMP"; exit 1
+  fi
+  unzip -q "$TMP/maven.zip" -d "$TMP/x"
+  rm -rf "$MVN_HOME"
+  mv "$TMP/x/$NAME" "$MVN_HOME"
+  rm -rf "$TMP"
+fi
+exec "$MVN_HOME/bin/mvn" "$@"

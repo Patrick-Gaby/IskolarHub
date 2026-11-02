@@ -1,0 +1,12 @@
+:root {
+  /* Motion tokens (spec §15.4). Starting points, not mandatory durations. */
+  --motion-fast: 120ms;
+  --motion-standard: 200ms;
+  --motion-emphasis: 280ms;
+  --motion-layout: 350ms;
+  --motion-stagger: 45ms;
+
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);    /* ease-out: things entering */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);     /* ease-in: things leaving */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}

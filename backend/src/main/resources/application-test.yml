@@ -1,0 +1,11 @@
+# Used by automated tests. The real database comes from Testcontainers (@ServiceConnection);
+# these values only satisfy placeholder resolution and are never connected to.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/unused
+    username: test
+    password: test
+
+iskolarhub:
+  cors:
+    allowed-origins: http://localhost:5173
