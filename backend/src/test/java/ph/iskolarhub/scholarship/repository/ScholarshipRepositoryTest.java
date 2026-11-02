@@ -119,7 +119,8 @@ class ScholarshipRepositoryTest {
         assertThat(gwa.get("comparison")).isEqualTo("AT_MOST");
         assertThat(((Number) gwa.get("value")).doubleValue()).isEqualTo(1.75);
         Map<String, Object> region = loaded.stream().filter(r -> r.getRuleType() == RuleType.REGION).findFirst().orElseThrow().getConfig();
-        assertThat((List<?>) region.get("allowed_region_codes")).containsExactly("NCR", "IV_A");
+        assertThat((List<String>) region.get("allowed_region_codes"))
+                .containsExactly("NCR", "IV_A");
     }
 
     @Test
